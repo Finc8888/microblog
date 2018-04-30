@@ -1,14 +1,28 @@
 <html>
 	<head>
-		{%if title%}
+		{% if title %}
 		<title>{{title}} microblog</title>
-		{%else%}
+		{% else %}
 		<title>	Welcome at common blog</title>
-		{%endif%}
+		{% endif %}
 	</head>
 	<body>
-		<div>Microblog:<a href = "/index"> Home </a></div>
+		<div>Microblog:
+			<a href = "{{url_for('index')}}"> Home </a>
+			<a href = "{{url_for('login')}}"> Login </a>
+		</div>
 		<hr>
-		{%block content%}{%endblock%}
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+		<ul>
+			{% for messange in messages %}
+			<li>{{message}}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		{% endwith %}
+		{% block content %}{% endblock %}
+		<!--Функция get_flashed_messages() поступает из Flask и возвращает список
+		 всех сообщений, которые были зарегистрированы в flash() ранее.  -->
 	</body>
 </html>
